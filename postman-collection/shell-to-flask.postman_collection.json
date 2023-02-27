@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "19c52c33-c3fa-4056-930a-ff0c0dbf342f",
+		"name": "shell-to-flask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "add-to-queue",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"if(pm.response.code == 200){\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"generated_key\", jsonData.key);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"command\": \"timeout 40\",\r\n    \"timeout\": 50\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9098/commands",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9098",
+					"path": [
+						"commands"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"command\": \"timeout 10\",\r\n    \"timeout\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9098/commands?key={{generated_key}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9098",
+					"path": [
+						"commands"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{generated_key}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "generated_key",
+			"value": "cea84122-da25-4e16-850d-372177643d5e",
+			"type": "default"
+		}
+	]
+}
